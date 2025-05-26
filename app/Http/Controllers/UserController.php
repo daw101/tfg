@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    // Solo para administradores (añade middleware auth y roles en rutas)
 
     public function index()
     {
