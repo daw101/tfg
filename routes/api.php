@@ -9,9 +9,6 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
 
-// =====================
-// Rutas públicas
-// =====================
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -23,9 +20,7 @@ Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/events', [EventController::class, 'index']);
 Route::get('/events/{id}', [EventController::class, 'show']);
 
-// =====================
-// Rutas protegidas (usuario autenticado)
-// =====================
+
 Route::middleware(['jwt.auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
@@ -42,24 +37,23 @@ Route::middleware(['jwt.auth'])->group(function () {
 
 
 
-    // Rutas solo para admins
+
     Route::middleware(['admin'])->group(function () {
-        // Productos
+
         Route::post('/products', [ProductController::class, 'store']);
         Route::put('/products/{id}', [ProductController::class, 'update']);
         Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 
-        // Categorías
+
         Route::post('/categories', [CategoryController::class, 'store']);
         Route::put('/categories/{id}', [CategoryController::class, 'update']);
         Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
 
-        // Eventos
+
         Route::post('/events', [EventController::class, 'store']);
         Route::put('/events/{id}', [EventController::class, 'update']);
         Route::delete('/events/{id}', [EventController::class, 'destroy']);
 
-        // Usuarios (CRUD completo para administración)
         Route::apiResource('users', UserController::class);
     });
 });
