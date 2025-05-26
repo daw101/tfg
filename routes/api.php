@@ -25,12 +25,9 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
 
-    // Ruta para que cualquier usuario autenticado pueda actualizar su propio perfil
     Route::put('/profile', [UserController::class, 'updateOwnProfile']);
-    // Pagos
     Route::post('/payments', [PaymentController::class, 'store']);
     Route::post('/checkout', [PaymentController::class, 'processCheckout']);
-        // Nueva ruta para obtener historial de compras del usuario logueado
     Route::get('/purchases', [UserController::class, 'purchaseHistory']);
     Route::get('/orders', [OrderController::class, 'index']);
         Route::get('/orders/user', [OrderController::class, 'userOrders']);
