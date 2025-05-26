@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    // Mostrar todos los productos
     public function index()
 {
     $products = Product::with('category')->get();
@@ -21,7 +20,6 @@ class ProductController extends Controller
 }
 
 
-    // Mostrar un producto individual
     public function show($id)
     {
         $product = Product::with('category')->findOrFail($id);
@@ -30,7 +28,6 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    // Crear nuevo producto con subida de imagen
     public function store(Request $request)
     {
         $request->validate([
@@ -62,7 +59,6 @@ class ProductController extends Controller
         return response()->json($product, 201);
     }
 
-    // Actualizar un producto (incluyendo imagen)
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
@@ -96,12 +92,10 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    // Eliminar un producto
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
 
-        // Borrar imagen del storage
         if ($product->image) {
             Storage::disk('public')->delete($product->image);
         }
